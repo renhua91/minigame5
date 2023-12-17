@@ -38,14 +38,28 @@ export default class GameInfo {
       atlas,
       120, 6, 39, 24,
       screenWidth / 2 - 60,
-      screenHeight / 2 - 100 + 180,
+      screenHeight / 2 - 100 + 200,
+      120, 40
+    )
+
+    ctx.fillText(
+      '分享好友',
+      screenWidth / 2 - 40,
+      screenHeight / 2 - 100 + 225
+    )
+
+    ctx.drawImage(
+      atlas,
+      120, 6, 39, 24,
+      screenWidth / 2 - 60,
+      screenHeight / 2 - 100 + 160,
       120, 40
     )
 
     ctx.fillText(
       '重新开始',
       screenWidth / 2 - 40,
-      screenHeight / 2 - 100 + 205
+      screenHeight / 2 - 100 + 185
     )
 
     /**
