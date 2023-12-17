@@ -34,13 +34,14 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
+    "useStaticServer": false,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "game",
   "libVersion": "2.20.1",
-  "appid": "wx19b1039c9831c47d",
+  "appid": "wx5089a181eb24307c",
   "projectname": "minigame-5",
   "packOptions": {
     "ignore": [

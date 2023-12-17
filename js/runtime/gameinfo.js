@@ -72,5 +72,16 @@ export default class GameInfo {
       endX: screenWidth / 2 + 50,
       endY: screenHeight / 2 - 100 + 255
     }
+
+    /**
+     * 分享按钮区域
+     * 方便简易判断按钮点击
+     */
+    this.shareBtnArea = {
+      startX: screenWidth / 2 - 60,
+      startY: screenHeight / 2 - 100 + 200,
+      endX: screenWidth / 2 - 60 + 120,
+      endY: screenHeight / 2 - 100 + 240
+    }    
   }
 }

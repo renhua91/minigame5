@@ -44,6 +44,18 @@ export default class Main {
     )
   }
 
+  shareToWeChat() {
+    wx.shareMessageToFriend({
+      openId: 'openId',
+      imageUrl: 'imageUrl',
+      imageUrlId: 'imageUrlId',
+      title: 'title',
+      success: (res) => {},
+      fail: (res) => {},
+      complete: (res) => {},
+    })
+  }
+
   /**
    * 随着帧数变化的敌机生成逻辑
    * 帧数取模定义成生成的频率
@@ -99,7 +111,19 @@ export default class Main {
     if (x >= area.startX
         && x <= area.endX
         && y >= area.startY
-        && y <= area.endY) this.restart()
+        && y <= area.endY) {
+      this.restart()
+    }
+
+    const shareArea = this.gameinfo.shareBtnArea
+
+    if (x >= shareArea.startX
+        && x <= shareArea.endX
+        && y >= shareArea.startY
+        && y <= shareArea.endY) {
+      this.shareToWeChat()
+    }
+
   }
 
   /**
