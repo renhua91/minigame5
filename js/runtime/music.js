@@ -23,7 +23,7 @@ export default class Music {
   }
 
   playBgm() {
-    //this.bgmAudio.play()
+    // this.bgmAudio.play()
   }
 
   playShoot() {
@@ -33,6 +33,6 @@ export default class Music {
 
   playExplosion() {
     this.boomAudio.currentTime = 0
-    //this.boomAudio.play()
+    // this.boomAudio.play()
   }
 }

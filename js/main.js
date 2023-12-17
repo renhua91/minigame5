@@ -45,14 +45,9 @@ export default class Main {
   }
 
   shareToWeChat() {
-    wx.shareMessageToFriend({
-      openId: 'openId',
-      imageUrl: 'imageUrl',
-      imageUrlId: 'imageUrlId',
-      title: 'title',
-      success: (res) => {},
-      fail: (res) => {},
-      complete: (res) => {},
+    console.log("用户点击分享")
+    wx.shareAppMessage({
+      title: '是兄弟就来大战肥高',
     })
   }
 

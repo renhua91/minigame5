@@ -70,7 +70,7 @@ export default class GameInfo {
       startX: screenWidth / 2 - 40,
       startY: screenHeight / 2 - 100 + 180,
       endX: screenWidth / 2 + 50,
-      endY: screenHeight / 2 - 100 + 255
+      endY: screenHeight / 2 - 100 + 200
     }
 
     /**
