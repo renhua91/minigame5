@@ -91,6 +91,16 @@ export default class Main {
         break
       }
     }
+
+    for (let i = 0, il = databus.treasures.length; i < il; i++){
+      const treasure = databus.treasures[i]
+      
+      if (this.player.isCollideWith(treasure)) {
+        console.log("zzzzz")
+        this.player.addBulletBuff() // 增加子弹数
+        // 移除宝箱或做其他处理...
+      }
+    }
   }
 
   // 游戏结束后的触摸事件处理逻辑
@@ -174,8 +184,6 @@ export default class Main {
     this.enemyGenerate()
     this.createTreasure()
     this.collisionDetection()
-    this.checkCollisionWithTreasure()
-
     if (databus.frame % 20 === 0) {
       this.player.shoot()
       this.music.playShoot()
@@ -201,16 +209,6 @@ export default class Main {
       const treasure = databus.pool.getItemByClass('treasure', Treasure)
       treasure.init()
       databus.treasures.push(treasure)
-    }
-  }
-  // 检查玩家是否与宝箱碰撞
-  checkCollisionWithTreasure() {
-    for (let i = 0; i < databus.treasures.length; i++) {
-      let treasure = databus.treasures[i]
-      if (this.player.collidesWith(treasure)) {
-        this.player.addBulletBuff() // 增加子弹数
-        // 移除宝箱或做其他处理...
-      }
     }
   }
 
