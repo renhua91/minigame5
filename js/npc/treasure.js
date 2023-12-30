@@ -1,6 +1,7 @@
 // 假设 Enemy 类和 Sprite 类的路径如下，根据实际情况调整
 import Sprite from '../base/sprite'
 import DataBus from '../databus'
+import Animation from '../base/animation'
 
 const TREASURE_IMG_SRC = 'images/bubble.jpg' // 宝箱图片路径
 const TREASURE_WIDTH = 50
@@ -15,7 +16,7 @@ function rnd(start, end) {
   return Math.floor(Math.random() * (end - start) + start)
 }
 
-export default class Treasure extends Sprite {
+export default class Treasure extends Animation {
   constructor() {
     super(TREASURE_IMG_SRC, TREASURE_WIDTH, TREASURE_HEIGHT)
 

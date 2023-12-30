@@ -15,9 +15,7 @@ const databus = new DataBus()
 export default class Main {
   constructor() {
     // 维护当前requestAnimationFrame的id
-    console.log("zzzzzzzz")
     this.aniId = 0
-
     this.restart()
   }
 
@@ -33,8 +31,6 @@ export default class Main {
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
     this.music = new Music()
-    this.treasures = [new Treasure()]
-
     this.bindLoop = this.loop.bind(this)
     this.hasEventBind = false
 
@@ -135,6 +131,7 @@ export default class Main {
 
     databus.bullets
       .concat(databus.enemys)
+      .concat(databus.treasures)
       .forEach((item) => {
         item.drawToCanvas(ctx)
       })
@@ -146,13 +143,6 @@ export default class Main {
         ani.aniRender(ctx)
       }
     })
-    // 渲染宝箱
-    this.treasures.forEach(treasure => {
-      console.log("zzzzzzzz1")
-      treasure.drawToCanvas(ctx)
-    })
-
-
 
     this.gameinfo.renderGameScore(ctx, databus.score)
 
@@ -176,6 +166,7 @@ export default class Main {
 
     databus.bullets
       .concat(databus.enemys)
+      .concat(databus.treasures)
       .forEach((item) => {
         item.update()
       })
@@ -183,11 +174,6 @@ export default class Main {
     this.enemyGenerate()
     this.createTreasure()
     this.collisionDetection()
-
-    // 更新宝箱的状态
-    this.treasures.forEach(treasure => {
-      treasure.update() // 确保宝箱的每个实例都被更新
-    })
 
     if (databus.frame % 20 === 0) {
       this.player.shoot()
