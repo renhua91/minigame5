@@ -73,10 +73,8 @@ export default class Main {
         if (!enemy.isPlaying && enemy.isCollideWith(bullet)) {
           enemy.playAnimation()
           that.music.playExplosion()
-
           bullet.visible = false
           databus.score += 1
-
           break
         }
       }
@@ -87,7 +85,6 @@ export default class Main {
 
       if (this.player.isCollideWith(enemy)) {
         databus.gameOver = true
-
         break
       }
     }
@@ -96,7 +93,6 @@ export default class Main {
       const treasure = databus.treasures[i]
       
       if (this.player.isCollideWith(treasure)) {
-        console.log("zzzzz")
         this.player.addBulletBuff() // 增加子弹数
         // 移除宝箱或做其他处理...
       }

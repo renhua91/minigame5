@@ -24,6 +24,7 @@ export default class Player extends Sprite {
     this.touched = false
 
     this.bullets = []
+    this.bulletCount = 2
 
     // 初始化事件监听
     this.initEvent()
@@ -106,7 +107,7 @@ export default class Player extends Sprite {
    * 射击时机由外部决定
    */
   shoot() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.bulletCount; i++) {
       const bullet = databus.pool.getItemByClass('bullet', Bullet)
 
       // 调整每枚子弹的初始位置
@@ -127,6 +128,6 @@ export default class Player extends Sprite {
   }
   // 增加一个方法来处理buff
   addBulletBuff() {
-    this.bullets = 5;
+    this.bulletCount = 5;
   }
 }
