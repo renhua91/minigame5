@@ -94,6 +94,7 @@ export default class Main {
       
       if (this.player.isCollideWith(treasure)) {
         this.player.addBulletBuff() // 增加子弹数
+        databus.removeTreasure(treasure)
         // 移除宝箱或做其他处理...
       }
     }

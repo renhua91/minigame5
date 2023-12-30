@@ -108,6 +108,7 @@ export default class Player extends Sprite {
    */
   shoot() {
     for (let i = 0; i < this.bulletCount; i++) {
+      console.log("this.bulletCount: ",this.bulletCount)
       const bullet = databus.pool.getItemByClass('bullet', Bullet)
 
       // 调整每枚子弹的初始位置
@@ -128,6 +129,7 @@ export default class Player extends Sprite {
   }
   // 增加一个方法来处理buff
   addBulletBuff() {
-    this.bulletCount = 5;
+    this.bulletCount += 1;
+    console.log("bulletCount：", this.bulletCount)
   }
 }
