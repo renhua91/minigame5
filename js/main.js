@@ -174,6 +174,7 @@ export default class Main {
     this.enemyGenerate()
     this.createTreasure()
     this.collisionDetection()
+    this.checkCollisionWithTreasure()
 
     if (databus.frame % 20 === 0) {
       this.player.shoot()
@@ -204,8 +205,8 @@ export default class Main {
   }
   // 检查玩家是否与宝箱碰撞
   checkCollisionWithTreasure() {
-    for (let i = 0; i < this.treasures.length; i++) {
-      let treasure = this.treasures[i]
+    for (let i = 0; i < databus.treasures.length; i++) {
+      let treasure = databus.treasures[i]
       if (this.player.collidesWith(treasure)) {
         this.player.addBulletBuff() // 增加子弹数
         // 移除宝箱或做其他处理...

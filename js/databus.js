@@ -55,7 +55,7 @@ export default class DataBus {
    * 此后不进入帧循环
    */
   removeTreasure(treasure) {
-    const temp = this.treasure.shift()
+    const temp = this.treasures.shift()
 
     temp.visible = false
 

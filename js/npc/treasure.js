@@ -28,7 +28,7 @@ export default class Treasure extends Animation {
     this.x = rnd(0, screenWidth - TREASURE_WIDTH)
     this.y = -this.height
 
-    this.speed = 2
+    this.speed = 3
 
     this.visible = true
   }
@@ -39,6 +39,7 @@ export default class Treasure extends Animation {
       return
 
     this.y += this.speed
+
     // 超出屏幕外回收自身
     if (this.y > screenHeight + this.height)
       databus.removeTreasure(this)
