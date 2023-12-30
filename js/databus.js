@@ -21,6 +21,7 @@ export default class DataBus {
     this.score = 0
     this.bullets = []
     this.enemys = []
+    this.treasure = []
     this.animations = []
     this.gameOver = false
   }

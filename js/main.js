@@ -4,6 +4,7 @@ import BackGround from './runtime/background'
 import GameInfo from './runtime/gameinfo'
 import Music from './runtime/music'
 import DataBus from './databus'
+import Treasure from './npc/treasure'
 
 const ctx = canvas.getContext('2d')
 const databus = new DataBus()
@@ -14,6 +15,7 @@ const databus = new DataBus()
 export default class Main {
   constructor() {
     // 维护当前requestAnimationFrame的id
+    console.log("zzzzzzzz")
     this.aniId = 0
 
     this.restart()
@@ -31,6 +33,7 @@ export default class Main {
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
     this.music = new Music()
+    this.treasures = [new Treasure()]
 
     this.bindLoop = this.loop.bind(this)
     this.hasEventBind = false
@@ -103,19 +106,19 @@ export default class Main {
 
     const area = this.gameinfo.btnArea
 
-    if (x >= area.startX
-        && x <= area.endX
-        && y >= area.startY
-        && y <= area.endY) {
+    if (x >= area.startX &&
+      x <= area.endX &&
+      y >= area.startY &&
+      y <= area.endY) {
       this.restart()
     }
 
     const shareArea = this.gameinfo.shareBtnArea
 
-    if (x >= shareArea.startX
-        && x <= shareArea.endX
-        && y >= shareArea.startY
-        && y <= shareArea.endY) {
+    if (x >= shareArea.startX &&
+      x <= shareArea.endX &&
+      y >= shareArea.startY &&
+      y <= shareArea.endY) {
       this.shareToWeChat()
     }
 
@@ -143,6 +146,13 @@ export default class Main {
         ani.aniRender(ctx)
       }
     })
+    // 渲染宝箱
+    this.treasures.forEach(treasure => {
+      console.log("zzzzzzzz1")
+      treasure.drawToCanvas(ctx)
+    })
+
+
 
     this.gameinfo.renderGameScore(ctx, databus.score)
 
@@ -171,7 +181,7 @@ export default class Main {
       })
 
     this.enemyGenerate()
-
+    this.createTreasure()
     this.collisionDetection()
 
     if (databus.frame % 20 === 0) {
@@ -192,4 +202,24 @@ export default class Main {
       canvas
     )
   }
+
+  // 在适当的位置生成宝箱
+  createTreasure() {
+    if (this.frame % 300 === 0) { // 举例，每3000帧生成一个宝箱
+      let treasure = new Treasure()
+      // 设置宝箱的初始位置和其他属性...
+      this.treasures.push(treasure)
+    }
+  }
+  // 检查玩家是否与宝箱碰撞
+  checkCollisionWithTreasure() {
+    for (let i = 0; i < this.treasures.length; i++) {
+      let treasure = this.treasures[i]
+      if (this.player.collidesWith(treasure)) {
+        this.player.addBulletBuff() // 增加子弹数
+        // 移除宝箱或做其他处理...
+      }
+    }
+  }
+
 }
