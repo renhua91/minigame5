@@ -184,6 +184,11 @@ export default class Main {
     this.createTreasure()
     this.collisionDetection()
 
+    // 更新宝箱的状态
+    this.treasures.forEach(treasure => {
+      treasure.update() // 确保宝箱的每个实例都被更新
+    })
+
     if (databus.frame % 20 === 0) {
       this.player.shoot()
       this.music.playShoot()

@@ -49,4 +49,16 @@ export default class DataBus {
 
     this.pool.recover('bullet', bullet)
   }
+
+  /**
+   * 回收子弹，进入对象池
+   * 此后不进入帧循环
+   */
+  removeTreasure(treasure) {
+    const temp = this.treasure.shift()
+
+    temp.visible = false
+
+    this.pool.recover('treasure', treasure)
+  }
 }
