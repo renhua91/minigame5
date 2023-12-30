@@ -196,10 +196,10 @@ export default class Main {
 
   // 在适当的位置生成宝箱
   createTreasure() {
-    if (this.frame % 300 === 0) { // 举例，每3000帧生成一个宝箱
-      let treasure = new Treasure()
-      // 设置宝箱的初始位置和其他属性...
-      this.treasures.push(treasure)
+    if (databus.frame % 300 === 0) {
+      const treasure = databus.pool.getItemByClass('treasure', Treasure)
+      treasure.init()
+      databus.treasures.push(treasure)
     }
   }
   // 检查玩家是否与宝箱碰撞

@@ -18,6 +18,7 @@ function rnd(start, end) {
 
 export default class Treasure extends Animation {
   constructor() {
+
     super(TREASURE_IMG_SRC, TREASURE_WIDTH, TREASURE_HEIGHT)
 
     this.init()
@@ -34,14 +35,10 @@ export default class Treasure extends Animation {
 
   // 宝箱的逻辑更新
   update() {
-    console.log('Drawing treasure at', this.visible)
-
     if (!this.visible)
       return
 
     this.y += this.speed
-    console.log('update treasure at', this.x, this.y)
-
     // 超出屏幕外回收自身
     if (this.y > screenHeight + this.height)
       databus.removeTreasure(this)
