@@ -10,7 +10,7 @@ const ctx = canvas.getContext('2d')
 const databus = new DataBus()
 
 /**
- * 游戏主函数
+ * 游戏主函数/
  */
 export default class Main {
   constructor() {
