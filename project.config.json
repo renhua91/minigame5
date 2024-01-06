@@ -42,7 +42,7 @@
   "compileType": "game",
   "libVersion": "2.20.1",
   "appid": "wx5089a181eb24307c",
-  "projectname": "minigame-5",
+  "projectname": "minigame5",
   "packOptions": {
     "ignore": [
       {
