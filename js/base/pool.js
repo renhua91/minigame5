@@ -42,4 +42,17 @@ export default class Pool {
   recover(name, instance) {
     this.getPoolBySign(name).push(instance)
   }
+
+   /**
+   * 清空对象池
+   * 遍历所有的对象池，并清空它们
+   */
+  clear() {
+    for (const key in this[__.poolDic]) {
+      if (this[__.poolDic].hasOwnProperty(key)) {
+        console.log("clear pool : " + key)
+        this[__.poolDic][key] = []
+      }
+    }
+  }
 }

@@ -114,6 +114,7 @@ export default class Main {
       y >= area.startY &&
       y <= area.endY) {
       this.restart()
+      return
     }
 
     const shareArea = this.gameinfo.shareBtnArea
@@ -123,6 +124,7 @@ export default class Main {
       y >= shareArea.startY &&
       y <= shareArea.endY) {
       this.shareToWeChat()
+      return
     }
 
   }

@@ -6,14 +6,15 @@ atlas.src = 'images/Common.png'
 
 export default class GameInfo {
   renderGameScore(ctx, score) {
-    ctx.fillStyle = '#ffffff'
-    ctx.font = '20px Arial'
+    ctx.fillStyle = '#ff0000'  // 设置字体颜色为红色
+    ctx.font = '60px Arial'    // 设置字体大小为原来的三倍
 
-    ctx.fillText(
-      score,
-      10,
-      30
-    )
+    const screenWidth = window.innerWidth
+    const x = screenWidth / 2 - 20  // 设置分数显示在屏幕中间
+    const y = 100               // 设置分数显示在屏幕上方，留出足够的空间
+
+    
+    ctx.fillText(score, x, y)
   }
 
   renderGameOver(ctx, score) {
@@ -67,8 +68,8 @@ export default class GameInfo {
      * 方便简易判断按钮点击
      */
     this.btnArea = {
-      startX: screenWidth / 2 - 40,
-      startY: screenHeight / 2 - 100 + 180,
+      startX: screenWidth / 2 - 60,
+      startY: screenHeight / 2 - 100 + 160,
       endX: screenWidth / 2 + 50,
       endY: screenHeight / 2 - 100 + 200
     }
