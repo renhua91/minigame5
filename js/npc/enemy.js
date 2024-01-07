@@ -2,8 +2,8 @@ import Animation from '../base/animation'
 import DataBus from '../databus'
 
 const ENEMY_IMG_PREFIX = 'images/enemy'; // 贴图路径前缀
-const ENEMY_WIDTH = 70
-const ENEMY_HEIGHT = 65
+const ENEMY_WIDTH = 80
+const ENEMY_HEIGHT = 75
 
 const __ = {
   speed: Symbol('speed'),
@@ -23,6 +23,7 @@ export default class Enemy extends Animation {
     this.initExplosionAnimation()
     // 根据类型设置不同的血量
     this[__.hp] = this.setHPByType(type)
+    this[__.originalhp] = this.setHPByType(type)
   }
 
   setHPByType(type) {
@@ -35,7 +36,7 @@ export default class Enemy extends Animation {
       case 3:
         return 6;
       case 4:
-        return 10;
+        return 8;
       default:
         return 1;
     }
@@ -47,6 +48,7 @@ export default class Enemy extends Animation {
 
     this[__.speed] = speed
     this[__.hp] = this.setHPByType(type)  // 设置敌人的血量
+    this[__.originalhp] = this.setHPByType(type) //記錄敵人的原始血量
     this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`; // 设置敌人的图像
 
 // 设置贴图路径

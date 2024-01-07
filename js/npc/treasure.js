@@ -28,7 +28,7 @@ export default class Treasure extends Animation {
     this.x = rnd(0, screenWidth - TREASURE_WIDTH)
     this.y = -this.height
 
-    this.speed = 3
+    this.speed = 9
 
     this.visible = true
   }

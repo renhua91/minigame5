@@ -23,7 +23,6 @@ export default class Main {
 
   restart() {
     databus.reset()
-
     canvas.removeEventListener(
       'touchstart',
       this.touchHandler
@@ -86,7 +85,7 @@ export default class Main {
         }
       }
       const enemy = databus.pool.getItemByClass('enemy', Enemy, enemyType)
-      enemy.init(3, enemyType);
+      enemy.init(6, enemyType);
       databus.enemys.push(enemy);
     }
   }
@@ -107,7 +106,9 @@ export default class Main {
       if (enemy.getHP() <= 0) {
         enemy.playAnimation();
         that.music.playExplosion();
+       // console.log("敵人血量是", enemy.originalhp);
         databus.score += 1;
+       
       }
 
       // 隐藏子弹
