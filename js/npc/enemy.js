@@ -17,7 +17,7 @@ function rnd(start, end) {
 }
 
 export default class Enemy extends Animation {
-  constructor() {
+  constructor(type) {
     super(`${ENEMY_IMG_PREFIX}${type}.png`, ENEMY_WIDTH, ENEMY_HEIGHT)
 
     this.initExplosionAnimation()
@@ -31,11 +31,11 @@ export default class Enemy extends Animation {
       case 1:
         return 1;
       case 2:
-        return 2;
-      case 3:
-        return 3;
-      case 4:
         return 4;
+      case 3:
+        return 6;
+      case 4:
+        return 10;
       default:
         return 1;
     }
@@ -46,7 +46,8 @@ export default class Enemy extends Animation {
     this.y = -this.height
 
     this[__.speed] = speed
-
+    this[__.hp] = this.setHPByType(type)  // 设置敌人的血量
+    this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`; // 设置敌人的图像
 
 // 设置贴图路径
 this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`;

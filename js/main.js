@@ -16,6 +16,8 @@ export default class Main {
   constructor() {
     // 维护当前requestAnimationFrame的id
     this.aniId = 0
+     // 初始化 startTime
+  this.startTime = Date.now();
     this.restart()
   }
 
@@ -59,27 +61,31 @@ export default class Main {
     const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
   
     if (databus.frame % 30 === 0) {
+      let currentTime = Date.now();
       let enemyType = 1; // 默认为血量1
-
+      console.log("出现type1",currentTime);
       // 根据经过的时间设置敌人的血量类型
       if (elapsedTime > 10) {
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.5) {
           enemyType = 2; // 20%的概率生成血量2的敌人
+          console.log("出现type2");
         }
       }
   
       if (elapsedTime > 20) {
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.3) {
           enemyType = 3; // 20%的概率生成血量3的敌人
+          console.log("出现type3");
         }
       }
   
       if (elapsedTime > 30) {
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.3) {
           enemyType = 4; // 20%的概率生成血量4的敌人
+          console.log("出现type4");
         }
       }
-      const enemy = databus.pool.getItemByClass('enemy', Enemy)
+      const enemy = databus.pool.getItemByClass('enemy', Enemy, enemyType)
       enemy.init(3, enemyType);
       databus.enemys.push(enemy);
     }
