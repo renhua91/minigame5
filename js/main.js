@@ -55,10 +55,33 @@ export default class Main {
    * 帧数取模定义成生成的频率
    */
   enemyGenerate() {
+    const currentTime = Date.now();
+    const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
+  
     if (databus.frame % 30 === 0) {
+      let enemyType = 1; // 默认为血量1
+
+      // 根据经过的时间设置敌人的血量类型
+      if (elapsedTime > 10) {
+        if (Math.random() < 0.2) {
+          enemyType = 2; // 20%的概率生成血量2的敌人
+        }
+      }
+  
+      if (elapsedTime > 20) {
+        if (Math.random() < 0.2) {
+          enemyType = 3; // 20%的概率生成血量3的敌人
+        }
+      }
+  
+      if (elapsedTime > 30) {
+        if (Math.random() < 0.2) {
+          enemyType = 4; // 20%的概率生成血量4的敌人
+        }
+      }
       const enemy = databus.pool.getItemByClass('enemy', Enemy)
-      enemy.init(3)
-      databus.enemys.push(enemy)
+      enemy.init(3, enemyType);
+      databus.enemys.push(enemy);
     }
   }
 
@@ -71,10 +94,19 @@ export default class Main {
         const enemy = databus.enemys[i]
 
         if (!enemy.isPlaying && enemy.isCollideWith(bullet)) {
-          enemy.playAnimation()
-          that.music.playExplosion()
-          bullet.visible = false
-          databus.score += 1
+          // 减少敌人血量
+      enemy.reduceHP();
+
+      // 如果敌人血量为0，执行相应的操作
+      if (enemy.getHP() <= 0) {
+        enemy.playAnimation();
+        that.music.playExplosion();
+        databus.score += 1;
+      }
+
+      // 隐藏子弹
+      bullet.visible = false;
+  
           break
         }
       }

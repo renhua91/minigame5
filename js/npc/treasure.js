@@ -4,8 +4,8 @@ import DataBus from '../databus'
 import Animation from '../base/animation'
 
 const TREASURE_IMG_SRC = 'images/bubble.jpg' // 宝箱图片路径
-const TREASURE_WIDTH = 50
-const TREASURE_HEIGHT = 40
+const TREASURE_WIDTH = 60
+const TREASURE_HEIGHT = 45
 
 const screenWidth = window.innerWidth
 const screenHeight = window.innerHeight

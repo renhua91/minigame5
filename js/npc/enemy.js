@@ -1,12 +1,13 @@
 import Animation from '../base/animation'
 import DataBus from '../databus'
 
-const ENEMY_IMG_SRC = 'images/enemy.png'
-const ENEMY_WIDTH = 50
-const ENEMY_HEIGHT = 40
+const ENEMY_IMG_PREFIX = 'images/enemy'; // 贴图路径前缀
+const ENEMY_WIDTH = 70
+const ENEMY_HEIGHT = 65
 
 const __ = {
-  speed: Symbol('speed')
+  speed: Symbol('speed'),
+  hp: Symbol('hp')
 }
 
 const databus = new DataBus()
@@ -17,16 +18,38 @@ function rnd(start, end) {
 
 export default class Enemy extends Animation {
   constructor() {
-    super(ENEMY_IMG_SRC, ENEMY_WIDTH, ENEMY_HEIGHT)
+    super(`${ENEMY_IMG_PREFIX}${type}.png`, ENEMY_WIDTH, ENEMY_HEIGHT)
 
     this.initExplosionAnimation()
+    // 根据类型设置不同的血量
+    this[__.hp] = this.setHPByType(type)
   }
 
-  init(speed) {
+  setHPByType(type) {
+    // 根据类型设置不同的血量
+    switch (type) {
+      case 1:
+        return 1;
+      case 2:
+        return 2;
+      case 3:
+        return 3;
+      case 4:
+        return 4;
+      default:
+        return 1;
+    }
+  }
+
+  init(speed, type) {
     this.x = rnd(0, window.innerWidth - ENEMY_WIDTH)
     this.y = -this.height
 
     this[__.speed] = speed
+
+
+// 设置贴图路径
+this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`;
 
     this.visible = true
   }
@@ -45,6 +68,16 @@ export default class Enemy extends Animation {
     this.initFrames(frames)
   }
 
+  // 减少敌人的血量
+ reduceHP() {
+  this[__.hp]--;
+}
+
+// 获取当前敌人的血量
+getHP() {
+  return this[__.hp];
+}
+  
   // 每一帧更新子弹位置
   update() {
     this.y += this[__.speed]
