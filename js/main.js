@@ -281,7 +281,7 @@ export default class Main {
     }
 
     // boss射击子弹
-    if (databus.frame % 20 === 0 && this.bossGenerated) {
+    if (databus.frame % 60 === 0 && this.bossGenerated) {
       databus.boss.forEach((item) => {
         item.shoot()
       })
