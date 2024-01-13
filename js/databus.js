@@ -20,6 +20,7 @@ export default class DataBus {
     this.frame = 0
     this.score = 0
     this.bullets = []
+    this.bossBullets = []
     this.enemys = []
     this.boss = []
     this.treasures = []
@@ -55,6 +56,18 @@ export default class DataBus {
     temp.visible = false
 
     this.pool.recover('enemy', enemy)
+  }
+
+  /**
+   * 回收boss子弹，进入对象池
+   * 此后不进入帧循环
+   */
+  removeBossBullets(bossBullet) {
+    const temp = this.bossBullets.shift()
+
+    temp.visible = false
+
+    this.pool.recover('bossBullet', bossBullet)
   }
 
   /**

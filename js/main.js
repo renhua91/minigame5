@@ -36,6 +36,8 @@ export default class Main {
     this.music = new Music()
     this.bindLoop = this.loop.bind(this)
     this.hasEventBind = false
+    this.bossGenerated = false;
+    this.startTime = Date.now();
 
     // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
@@ -60,7 +62,7 @@ export default class Main {
   enemyGenerate() {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
-    const bossTime = 5;
+    const bossTime = 30;
 
     if (!this.bossGenerated && elapsedTime > bossTime) {
       const boss = databus.pool.getItemByClass('boss', Boss)
@@ -162,6 +164,16 @@ export default class Main {
       }
     }
 
+    //bossBullet和玩家的碰撞逻辑
+    for (let i = 0, il = databus.bossBullets.length; i < il; i++) {
+      const bossBullet = databus.bossBullets[i]
+
+      if (this.player.isCollideWith(bossBullet)) {
+        databus.gameOver = true
+        break
+      }
+    }
+
     //宝箱和玩家的碰撞逻辑
     for (let i = 0, il = databus.treasures.length; i < il; i++) {
       const treasure = databus.treasures[i]
@@ -216,6 +228,7 @@ export default class Main {
       .concat(databus.enemys)
       .concat(databus.boss)
       .concat(databus.treasures)
+      .concat(databus.bossBullets)
       .forEach((item) => {
         item.drawToCanvas(ctx)
       })
@@ -252,6 +265,7 @@ export default class Main {
       .concat(databus.enemys)
       .concat(databus.boss)
       .concat(databus.treasures)
+      .concat(databus.bossBullets)
       .forEach((item) => {
         item.update()
       })
@@ -259,9 +273,18 @@ export default class Main {
     this.enemyGenerate()
     this.createTreasure()
     this.collisionDetection()
+
+    // 玩家射击子弹
     if (databus.frame % 20 === 0) {
       this.player.shoot()
       this.music.playShoot()
+    }
+
+    // boss射击子弹
+    if (databus.frame % 20 === 0 && this.bossGenerated) {
+      databus.boss.forEach((item) => {
+        item.shoot()
+      })
     }
   }
 
