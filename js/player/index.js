@@ -26,6 +26,8 @@ export default class Player extends Sprite {
     this.bullets = []
     this.bulletCount = 1
 
+    this.bulletSpeedMultiplier = 1; // 新属性：子弹速度倍数
+
     // 初始化事件监听
     this.initEvent()
   }
@@ -116,12 +118,9 @@ export default class Player extends Sprite {
       // 根据子弹的索引调整子弹的水平位置
       // 这里的10是子弹之间的水平间距，可以根据需要调整
       bulletX += (i - 1) * 10;
-      bullet.init(
-        bulletX,
-        this.y - 10,
-        10
-      )
-      databus.bullets.push(bullet)
+       // 使用 bulletSpeedMultiplier 计算子弹速度
+       bullet.init(bulletX, this.y - 10, 10 * this.bulletSpeedMultiplier)
+       databus.bullets.push(bullet)
     }
   }
   // 增加一个方法来处理buff
@@ -130,4 +129,10 @@ export default class Player extends Sprite {
       this.bulletCount += 1;
     }
   }
+  increaseBulletSpeed() {
+    if (this.bulletSpeedMultiplier < 2) {
+      this.bulletSpeedMultiplier += 0.2;
+    }
+  }
+
 }
