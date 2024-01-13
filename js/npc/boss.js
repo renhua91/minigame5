@@ -22,6 +22,7 @@ export default class Boss extends Animation {
     this.x = screenWidth / 2 - this.width / 2
     this.y = -this.height
     this.hp = 50
+    this.originalhp = 50
     this.visible = true
     this.bossBullets = []
     this.bulletCount = 2
@@ -81,5 +82,26 @@ export default class Boss extends Animation {
       )
       databus.bossBullets.push(bossBullet)
     }
+  }
+
+  drawToCanvas(ctx) {
+    super.drawToCanvas(ctx);
+
+    if (!this.visible) return;
+
+    // 绘制血量条
+    const barWidth = this.width; // 血量条的宽度，与敌人宽度相同
+    const barHeight = 5; // 血量条的高度
+    const barX = this.x;
+    const barY = this.y - barHeight - 5; // 血量条在敌人上方一定距离
+
+    // 背景条
+    ctx.fillStyle = 'gray';
+    ctx.fillRect(barX, barY, barWidth, barHeight);
+
+    // 血量条
+    const healthRatio = this.hp / this.originalhp; // 当前血量与原始血量的比例
+    ctx.fillStyle = 'red';
+    ctx.fillRect(barX, barY, barWidth * healthRatio, barHeight);
   }
 }
