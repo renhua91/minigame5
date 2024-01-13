@@ -24,7 +24,7 @@ export default class Player extends Sprite {
     this.touched = false
 
     this.bullets = []
-    this.bulletCount = 2
+    this.bulletCount = 1
 
     // 初始化事件监听
     this.initEvent()

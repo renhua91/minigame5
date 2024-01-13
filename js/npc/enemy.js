@@ -95,9 +95,9 @@ export default class Enemy extends Animation {
     if (!this.visible) return;
 
     // 绘制血量条
-    const barWidth = this.width; // 血量条的宽度，与敌人宽度相同
-    const barHeight = 5; // 血量条的高度
-    const barX = this.x;
+    const barWidth = this.width * 0.6; // 血量条的宽度，与敌人宽度相同
+    const barHeight = 3; // 血量条的高度
+    const barX = this.x + this.width * 0.2;
     const barY = this.y - barHeight - 5; // 血量条在敌人上方一定距离
 
     // 背景条
