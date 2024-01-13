@@ -21,6 +21,7 @@ export default class DataBus {
     this.score = 0
     this.bullets = []
     this.enemys = []
+    this.boss = []
     this.treasures = []
     this.animations = []
     this.gameOver = false
@@ -30,6 +31,18 @@ export default class DataBus {
   resetPool() {
     // 这里添加重置对象池的逻辑
     this.pool.clear(); // 假设 Pool 类有 clear 方法
+  }
+
+  /**
+   * 回收boss，进入对象池
+   * 此后不进入帧循环
+   */
+  removeBoss(boss) {
+    const temp = this.boss.shift()
+
+    temp.visible = false
+
+    this.pool.recover('boss', boss)
   }
 
   /**

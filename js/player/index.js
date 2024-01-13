@@ -107,9 +107,7 @@ export default class Player extends Sprite {
    * 射击时机由外部决定
    */
   shoot() {
-    console.log("this.bulletCount:",this.bulletCount)
     for (let i = 0; i < this.bulletCount; i++) {
-      console.log("this.bulletCount foreach:",i)
       const bullet = databus.pool.getItemByClass('bullet', Bullet)
 
       // 调整每枚子弹的初始位置
@@ -118,17 +116,11 @@ export default class Player extends Sprite {
       // 根据子弹的索引调整子弹的水平位置
       // 这里的10是子弹之间的水平间距，可以根据需要调整
       bulletX += (i - 1) * 10;
-
-      console.log("bulletX:",bulletX)
-
       bullet.init(
         bulletX,
         this.y - 10,
         10
       )
-
-      console.log("bullet:",bullet)
-
       databus.bullets.push(bullet)
     }
   }

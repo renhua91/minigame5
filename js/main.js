@@ -5,6 +5,7 @@ import GameInfo from './runtime/gameinfo'
 import Music from './runtime/music'
 import DataBus from './databus'
 import Treasure from './npc/treasure'
+import Boss from './npc/boss'
 
 const ctx = canvas.getContext('2d')
 const databus = new DataBus()
@@ -16,8 +17,9 @@ export default class Main {
   constructor() {
     // 维护当前requestAnimationFrame的id
     this.aniId = 0
-     // 初始化 startTime
-  this.startTime = Date.now();
+    // 初始化 startTime
+    this.startTime = Date.now();
+    this.bossGenerated = false;
     this.restart()
   }
 
@@ -58,30 +60,39 @@ export default class Main {
   enemyGenerate() {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
-  
+    const bossTime = 5;
+
+    if (!this.bossGenerated && elapsedTime > bossTime) {
+      const boss = databus.pool.getItemByClass('boss', Boss)
+      boss.init();
+      databus.boss.push(boss);
+      this.bossGenerated = true;
+    }
+
+    if (this.bossGenerated) {
+      // 如果boss出现了则不出现其他敌机
+      return
+    }
+
     if (databus.frame % 30 === 0) {
-      let currentTime = Date.now();
       let enemyType = 1; // 默认为血量1
-      console.log("出现type1",currentTime);
+      // console.log("出现type1",currentTime);
       // 根据经过的时间设置敌人的血量类型
       if (elapsedTime > 10) {
         if (Math.random() < 0.5) {
           enemyType = 2; // 20%的概率生成血量2的敌人
-          console.log("出现type2");
         }
       }
-  
+
       if (elapsedTime > 20) {
         if (Math.random() < 0.3) {
           enemyType = 3; // 20%的概率生成血量3的敌人
-          console.log("出现type3");
         }
       }
-  
+
       if (elapsedTime > 30) {
         if (Math.random() < 0.3) {
           enemyType = 4; // 20%的概率生成血量4的敌人
-          console.log("出现type4");
         }
       }
       const enemy = databus.pool.getItemByClass('enemy', Enemy, enemyType)
@@ -94,31 +105,54 @@ export default class Main {
   collisionDetection() {
     const that = this
 
+    //子弹和enemy的碰撞逻辑
     databus.bullets.forEach((bullet) => {
       for (let i = 0, il = databus.enemys.length; i < il; i++) {
         const enemy = databus.enemys[i]
 
         if (!enemy.isPlaying && enemy.isCollideWith(bullet)) {
           // 减少敌人血量
-      enemy.reduceHP();
+          enemy.reduceHP();
 
-      // 如果敌人血量为0，执行相应的操作
-      if (enemy.getHP() <= 0) {
-        enemy.playAnimation();
-        that.music.playExplosion();
-       // console.log("敵人血量是", enemy.originalhp);
-        databus.score += 1;
-       
-      }
+          // 如果敌人血量为0，执行相应的操作
+          if (enemy.getHP() <= 0) {
+            enemy.playAnimation();
+            that.music.playExplosion();
+            databus.score += 1;
+          }
 
-      // 隐藏子弹
-      bullet.visible = false;
-  
+          // 隐藏子弹
+          bullet.visible = false;
           break
         }
       }
     })
 
+    //子弹和boss的碰撞逻辑
+    databus.bullets.forEach((bullet) => {
+      for (let i = 0, il = databus.boss.length; i < il; i++) {
+        const boss = databus.boss[i]
+
+        if (!boss.isPlaying && boss.isCollideWith(bullet)) {
+          // 减少敌人血量
+          boss.reduceHP();
+
+          // 如果敌人血量为0，执行相应的操作
+          if (boss.getHP() <= 0) {
+            boss.playAnimation();
+            that.music.playExplosion();
+            databus.score += 1;
+            databus.gameOver = true
+          }
+
+          // 隐藏子弹
+          bullet.visible = false;
+          break
+        }
+      }
+    })
+
+    //enemy和玩家的碰撞逻辑
     for (let i = 0, il = databus.enemys.length; i < il; i++) {
       const enemy = databus.enemys[i]
 
@@ -128,9 +162,10 @@ export default class Main {
       }
     }
 
-    for (let i = 0, il = databus.treasures.length; i < il; i++){
+    //宝箱和玩家的碰撞逻辑
+    for (let i = 0, il = databus.treasures.length; i < il; i++) {
       const treasure = databus.treasures[i]
-      
+
       if (this.player.isCollideWith(treasure)) {
         this.player.addBulletBuff() // 增加子弹数
         databus.removeTreasure(treasure)
@@ -179,6 +214,7 @@ export default class Main {
 
     databus.bullets
       .concat(databus.enemys)
+      .concat(databus.boss)
       .concat(databus.treasures)
       .forEach((item) => {
         item.drawToCanvas(ctx)
@@ -214,6 +250,7 @@ export default class Main {
 
     databus.bullets
       .concat(databus.enemys)
+      .concat(databus.boss)
       .concat(databus.treasures)
       .forEach((item) => {
         item.update()
@@ -243,6 +280,11 @@ export default class Main {
 
   // 在适当的位置生成宝箱
   createTreasure() {
+    if (this.bossGenerated) {
+      // 如果boss出现了则不出现宝箱
+      return
+    }
+
     if (databus.frame % 300 === 0) {
       const treasure = databus.pool.getItemByClass('treasure', Treasure)
       treasure.init()

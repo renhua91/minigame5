@@ -47,12 +47,12 @@ export default class Enemy extends Animation {
     this.y = -this.height
 
     this[__.speed] = speed
-    this[__.hp] = this.setHPByType(type)  // 设置敌人的血量
+    this[__.hp] = this.setHPByType(type) // 设置敌人的血量
     this[__.originalhp] = this.setHPByType(type) //記錄敵人的原始血量
     this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`; // 设置敌人的图像
 
-// 设置贴图路径
-this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`;
+    // 设置贴图路径
+    this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`;
 
     this.visible = true
   }
@@ -72,15 +72,15 @@ this.img.src = `${ENEMY_IMG_PREFIX}${type}.png`;
   }
 
   // 减少敌人的血量
- reduceHP() {
-  this[__.hp]--;
-}
+  reduceHP() {
+    this[__.hp]--;
+  }
 
-// 获取当前敌人的血量
-getHP() {
-  return this[__.hp];
-}
-  
+  // 获取当前敌人的血量
+  getHP() {
+    return this[__.hp];
+  }
+
   // 每一帧更新子弹位置
   update() {
     this.y += this[__.speed]
