@@ -3,7 +3,7 @@ import Sprite from '../base/sprite'
 import DataBus from '../databus'
 import Animation from '../base/animation'
 
-const TREASURE_IMG_SRC = 'images/bubble.jpg' // 宝箱图片路径
+const TREASURE_IMG_PREFIX = 'images/bubble' // 宝箱图片路径
 const TREASURE_WIDTH = 60
 const TREASURE_HEIGHT = 45
 
@@ -17,10 +17,10 @@ function rnd(start, end) {
 }
 
 export default class Treasure extends Animation {
-  constructor() {
+  constructor(type) {
 
-    super(TREASURE_IMG_SRC, TREASURE_WIDTH, TREASURE_HEIGHT)
-
+    super(`${TREASURE_IMG_PREFIX}${type}.jpg`, TREASURE_WIDTH, TREASURE_HEIGHT)
+    this.type = type;
     this.init()
   }
 
@@ -43,6 +43,10 @@ export default class Treasure extends Animation {
     // 超出屏幕外回收自身
     if (this.y > screenHeight + this.height)
       databus.removeTreasure(this)
+  }
+
+  getType() {
+    return this.type;
   }
 
   // 在 Treasure 类的 drawToCanvas 方法中

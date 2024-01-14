@@ -22,6 +22,7 @@ export default class Player extends Sprite {
 
     // 用于在手指移动的时候标识手指是否已经在飞机上了
     this.touched = false
+    this.shootFrequency = 30
 
     this.bullets = []
     this.bulletCount = 1
@@ -118,21 +119,25 @@ export default class Player extends Sprite {
       // 根据子弹的索引调整子弹的水平位置
       // 这里的10是子弹之间的水平间距，可以根据需要调整
       bulletX += (i - 1) * 10;
-       // 使用 bulletSpeedMultiplier 计算子弹速度
-       bullet.init(bulletX, this.y - 10, 10 * this.bulletSpeedMultiplier)
-       databus.bullets.push(bullet)
+      // 使用 bulletSpeedMultiplier 计算子弹速度
+      bullet.init(bulletX, this.y - 10, 10 * this.bulletSpeedMultiplier)
+      databus.bullets.push(bullet)
     }
   }
   // 增加一个方法来处理buff
   addBulletBuff() {
-    if(this.bulletCount < 3) {
+    if (this.bulletCount < 3) {
       this.bulletCount += 1;
     }
   }
   increaseBulletSpeed() {
-    if (this.bulletSpeedMultiplier < 2) {
-      this.bulletSpeedMultiplier += 0.2;
+    if (this.shootFrequency > 10) {
+      this.shootFrequency -= 5;
     }
+  }
+
+  getShootFrequency() {
+   return this.shootFrequency;
   }
 
 }

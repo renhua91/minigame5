@@ -6,7 +6,6 @@ import Music from './runtime/music'
 import DataBus from './databus'
 import Treasure from './npc/treasure'
 import Boss from './npc/boss'
-import Treasure2 from './npc/treasure2'
 
 const ctx = canvas.getContext('2d')
 const databus = new DataBus()
@@ -203,7 +202,8 @@ export default class Main {
 
       if (this.player.isCollideWith(treasure)) {
         // 检查是否是宝藏2
-        if (treasure instanceof Treasure2) {
+        console.log("treasure.getType() : ", treasure.getType())
+        if (treasure.getType() === 2) {
           this.player.increaseBulletSpeed();
         } else {
           this.player.addBulletBuff(); // 宝藏1的现有逻辑
@@ -304,7 +304,7 @@ export default class Main {
     this.collisionDetection()
 
     // 玩家射击子弹
-    if (databus.frame % 20 === 0) {
+    if (databus.frame % this.player.getShootFrequency() === 0) {
       this.player.shoot()
       this.music.playShoot()
     }
@@ -341,11 +341,10 @@ export default class Main {
       let treasure;
       if (Math.random() < 0.5) {
         // 50% 的概率生成宝藏1
-        treasure = new Treasure();
+        treasure = new Treasure(1);
       } else {
         // 50% 的概率生成宝藏2
-        treasure = new Treasure2();
-        console.log("宝箱2", treasure.TREASURE2_HEIGHT)
+        treasure = new Treasure(2);
       }
       treasure.init();
       databus.treasures.push(treasure);
