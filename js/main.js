@@ -323,7 +323,7 @@ export default class Main {
       } else {
         // 50% 的概率生成宝藏2
         treasure = new Treasure2();
-        console.log("宝箱2",treasure.TREASURE2_IMG_SRC, treasure.TREASURE2_WIDTH, treasure.TREASURE2_HEIGHT)
+        console.log("宝箱2", treasure.TREASURE2_HEIGHT)
       }
       treasure.init();
       databus.treasures.push(treasure);
