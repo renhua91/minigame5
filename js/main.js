@@ -20,6 +20,7 @@ export default class Main {
     // 初始化 startTime
     this.startTime = Date.now();
     this.bossGenerated = false;
+    this.level = 1;
     this.restart()
   }
 
@@ -30,7 +31,27 @@ export default class Main {
       this.touchHandler
     )
 
-    this.bg = new BackGround(ctx)
+    this.bg = new BackGround(ctx, this.level)
+    this.player = new Player(ctx)
+    this.gameinfo = new GameInfo()
+    this.music = new Music()
+    this.bindLoop = this.loop.bind(this)
+    this.hasEventBind = false
+    this.bossGenerated = false;
+    this.startTime = Date.now();
+
+    // 清除上一局的动画
+    window.cancelAnimationFrame(this.aniId)
+
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      canvas
+    )
+  }
+
+  enterNext(level) {
+    databus.reset()
+    this.bg = new BackGround(ctx, this.level)
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
     this.music = new Music()
@@ -144,7 +165,8 @@ export default class Main {
             boss.playAnimation();
             that.music.playExplosion();
             databus.score += 1;
-            databus.gameOver = true
+            this.enterNext(2);
+            return;
           }
 
           // 隐藏子弹
