@@ -29,6 +29,18 @@ export default class DataBus {
     this.resetPool()
   }
 
+  enterNext() {
+    this.frame = 0
+    this.bullets = []
+    this.bossBullets = []
+    this.enemys = []
+    this.boss = []
+    this.treasures = []
+    this.animations = []
+    this.gameOver = false
+    this.resetPool()
+  }
+
   resetPool() {
     // 这里添加重置对象池的逻辑
     this.pool.clear(); // 假设 Pool 类有 clear 方法

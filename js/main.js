@@ -50,8 +50,8 @@ export default class Main {
   }
 
   enterNext(level) {
-    databus.reset()
-    this.bg = new BackGround(ctx, this.level)
+    databus.enterNext()
+    this.bg = new BackGround(ctx, level)
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
     this.music = new Music()
