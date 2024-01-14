@@ -4,8 +4,8 @@ import DataBus from '../databus'
 import Animation from '../base/animation'
 
 const TREASURE_IMG_PREFIX = 'images/bubble' // 宝箱图片路径
-const TREASURE_WIDTH = 60
-const TREASURE_HEIGHT = 45
+const TREASURE_WIDTH = 35
+const TREASURE_HEIGHT = 40
 
 const screenWidth = window.innerWidth
 const screenHeight = window.innerHeight
@@ -19,7 +19,7 @@ function rnd(start, end) {
 export default class Treasure extends Animation {
   constructor(type) {
 
-    super(`${TREASURE_IMG_PREFIX}${type}.jpg`, TREASURE_WIDTH, TREASURE_HEIGHT)
+    super(`${TREASURE_IMG_PREFIX}${type}.png`, TREASURE_WIDTH, TREASURE_HEIGHT)
     this.type = type;
     this.init()
   }
