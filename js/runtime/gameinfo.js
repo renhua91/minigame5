@@ -43,7 +43,7 @@ export default class GameInfo {
 
     ctx.fillText(
       this.getRankResult(score),
-      screenWidth / 2 - 40,
+      screenWidth / 2 - 100,
       screenHeight / 2 - 100 + 80
     )
 
