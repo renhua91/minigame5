@@ -40,7 +40,39 @@ export default class Main {
     this.bossGenerated = false;
     this.startTime = Date.now();
 
-    // 清除上一局的动画试一下
+    // 清除上一局的动画
+    window.cancelAnimationFrame(this.aniId)
+
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      canvas
+    )
+  }
+
+  //复活方法
+  revive() {
+    console.log("点击复活")
+    // 将屏幕上的所有敌机血量设置为0
+    databus.enemys.forEach(enemy => {
+      if (enemy.visible) { // 检查敌机是否在屏幕上
+        enemy.hp = 0;
+        console.log("血量为0")
+      }
+    });
+
+    // 将屏幕上的boss血量减半
+    databus.boss.forEach(boss => {
+      if (boss.visible) { // 检查boss是否在屏幕上
+        boss.hp = boss.hp / 2;
+      }
+    });
+
+    // 重置游戏状态
+    databus.gameOver = false;
+    console.log("重置状态，", databus.gameOver)
+    // ...其他重置逻辑...
+
+    // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
 
     this.aniId = window.requestAnimationFrame(
@@ -212,7 +244,7 @@ export default class Main {
         // 移除宝箱或做其他处理...
       }
     }
-    
+
   }
 
   // 游戏结束后的触摸事件处理逻辑
@@ -242,7 +274,18 @@ export default class Main {
       return
     }
 
+    // 检查是否点击了复活按钮
+    const reviveButtonArea = this.gameinfo.reviveButtonArea;
+    if (x >= reviveButtonArea.startX && 
+      x <= reviveButtonArea.endX &&
+      y >= reviveButtonArea.startY && 
+      y <= reviveButtonArea.endY) {
+      this.revive();
+      return;
+    }
   }
+
+  
 
   /**
    * canvas重绘函数---
@@ -274,6 +317,7 @@ export default class Main {
 
     // 游戏结束停止帧循环
     if (databus.gameOver) {
+      console.log("游戏结束")
       this.gameinfo.renderGameOver(ctx, databus.score)
 
       if (!this.hasEventBind) {
