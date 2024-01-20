@@ -47,6 +47,7 @@ export default class Main {
       this.bindLoop,
       canvas
     )
+
   }
 
   //复活方法
@@ -72,13 +73,6 @@ export default class Main {
     console.log("重置状态，", databus.gameOver)
     // ...其他重置逻辑...
 
-    // 清除上一局的动画
-    window.cancelAnimationFrame(this.aniId)
-
-    this.aniId = window.requestAnimationFrame(
-      this.bindLoop,
-      canvas
-    )
   }
 
   enterNext(level) {
@@ -314,6 +308,8 @@ export default class Main {
     })
 
     this.gameinfo.renderGameScore(ctx, databus.score)
+
+    console.log("databus.gameOver：", databus.gameOver);
 
     // 游戏结束停止帧循环
     if (databus.gameOver) {
