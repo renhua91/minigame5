@@ -21,6 +21,7 @@ export default class Main {
     this.startTime = Date.now();
     this.bossGenerated = false;
     this.level = 1;
+    this.victory = false;
     this.restart()
   }
 
@@ -64,6 +65,13 @@ export default class Main {
       }
     });
 
+    // 将屏幕上的bossbullet也需要消失
+    databus.bossBullets.forEach(bossBullet => {
+      if (bossBullet.visible) { // 检查敌机是否在屏幕上
+        bossBullet.playAnimation();
+      }
+    });
+
     // 将屏幕上的boss血量减半
     databus.boss.forEach(boss => {
       if (boss.visible) { // 检查boss是否在屏幕上
@@ -85,6 +93,12 @@ export default class Main {
   }
 
   enterNext(level) {
+    if (level > 3) {
+      databus.gameOver = true;
+      this.victory = true;
+      return;
+    }
+    
     databus.enterNext()
     this.bg = new BackGround(ctx, level)
     this.player = new Player(ctx)
@@ -200,7 +214,8 @@ export default class Main {
             boss.playAnimation();
             that.music.playExplosion();
             databus.score += 1;
-            this.enterNext(2);
+            this.level += 1;
+            this.enterNext(this.level);
             return;
           }
 
@@ -217,7 +232,6 @@ export default class Main {
 
       if (this.player.isCollideWith(enemy)) {
         databus.gameOver = true
-        console.log("设置gameOver为true-1")
         break
       }
     }
@@ -228,7 +242,6 @@ export default class Main {
 
       if (this.player.isCollideWith(bossBullet)) {
         databus.gameOver = true
-        console.log("设置gameOver为true-2")
         break
       }
     }
@@ -322,7 +335,7 @@ export default class Main {
 
     // 游戏结束停止帧循环
     if (databus.gameOver) {
-      this.gameinfo.renderGameOver(ctx, databus.score)
+      this.gameinfo.renderGameOver(ctx, databus.score, this.victory)
 
       if (!this.hasEventBind) {
         this.hasEventBind = true
