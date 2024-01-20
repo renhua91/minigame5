@@ -3,9 +3,9 @@ import Animation from '../base/animation'
 import DataBus from '../databus'
 import BossBullet from './bossBullet'
 
-const BOSS_IMG_SRC = 'images/boss.png' // 假设 Boss 的图片路径
-const BOSS_WIDTH = 120
-const BOSS_HEIGHT = 100
+const BOSS_IMG_SRC = 'images/boss1.png' // 假设 Boss 的图片路径
+const BOSS_WIDTH = 300
+const BOSS_HEIGHT = 150
 
 const screenWidth = window.innerWidth
 
