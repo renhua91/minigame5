@@ -40,7 +40,7 @@ export default class Main {
     this.bossGenerated = false;
     this.startTime = Date.now();
 
-    // 清除上一局的动画
+    // 清除上一局的动画试一下
     window.cancelAnimationFrame(this.aniId)
 
     this.aniId = window.requestAnimationFrame(
