@@ -40,9 +40,44 @@ export default class Main {
     this.bossGenerated = false;
     this.startTime = Date.now();
 
-    // 清除上一局的动画试一下
+    // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
 
+    this.aniId = window.requestAnimationFrame(
+      this.bindLoop,
+      canvas
+    )
+
+  }
+
+  //复活方法
+  revive() {
+    console.log("点击复活")
+    // 重置游戏状态
+    databus.gameOver = false;
+    console.log("设置gameOver为false")
+
+    // 将屏幕上的所有敌机血量设置为0
+    databus.enemys.forEach(enemy => {
+      if (enemy.visible) { // 检查敌机是否在屏幕上
+        enemy.playAnimation();
+      }
+    });
+
+    // 将屏幕上的boss血量减半
+    databus.boss.forEach(boss => {
+      if (boss.visible) { // 检查boss是否在屏幕上
+        boss.hp = boss.hp / 2;
+      }
+    });
+    
+    console.log("重置状态，", databus.gameOver)
+    // ...其他重置逻辑...
+
+    // 清除上一局的动画
+    window.cancelAnimationFrame(this.aniId)
+
+    // 重新开始游戏循环 
     this.aniId = window.requestAnimationFrame(
       this.bindLoop,
       canvas
@@ -182,6 +217,7 @@ export default class Main {
 
       if (this.player.isCollideWith(enemy)) {
         databus.gameOver = true
+        console.log("设置gameOver为true-1")
         break
       }
     }
@@ -192,6 +228,7 @@ export default class Main {
 
       if (this.player.isCollideWith(bossBullet)) {
         databus.gameOver = true
+        console.log("设置gameOver为true-2")
         break
       }
     }
@@ -212,7 +249,7 @@ export default class Main {
         // 移除宝箱或做其他处理...
       }
     }
-    
+
   }
 
   // 游戏结束后的触摸事件处理逻辑
@@ -238,11 +275,22 @@ export default class Main {
       x <= shareArea.endX &&
       y >= shareArea.startY &&
       y <= shareArea.endY) {
-      this.shareToWeChat()
+        this.shareToWeChat();
       return
-    }
+    } 
 
+    // 检查是否点击了复活按钮
+    const reviveButtonArea = this.gameinfo.reviveButtonArea;
+    if (x >= reviveButtonArea.startX &&
+      x <= reviveButtonArea.endX &&
+      y >= reviveButtonArea.startY &&
+      y <= reviveButtonArea.endY) {
+      this.revive();
+      return;
+    }
   }
+
+
 
   /**
    * canvas重绘函数---
