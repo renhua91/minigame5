@@ -17,6 +17,18 @@ export default class GameInfo {
     ctx.fillText(score, x, y)
   }
 
+  getRankResult(score) {
+    if (score > 10 && score < 20) {
+      return "你战胜了全国70%的玩家"
+    }
+
+    if (score > 130) {
+      return "你战胜了全国99%的玩家"
+    }
+
+    return `你战胜了全国: ${score*100/130}%的玩家`
+  }
+
   renderGameOver(ctx, score) {
     ctx.drawImage(atlas, 0, 0, 119, 108, screenWidth / 2 - 150, screenHeight / 2 - 100, 300, 300)
 
@@ -27,6 +39,12 @@ export default class GameInfo {
       '游戏结束',
       screenWidth / 2 - 40,
       screenHeight / 2 - 100 + 50
+    )
+
+    ctx.fillText(
+      this.getRankResult(score),
+      screenWidth / 2 - 100,
+      screenHeight / 2 - 100 + 80
     )
 
     ctx.fillText(
