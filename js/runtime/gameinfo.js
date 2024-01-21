@@ -7,7 +7,7 @@ atlas.src = 'images/Common.png'
 export default class GameInfo {
   constructor() {
     this.scoreFontSize = 40; // 初始字体大小
-    this.scoreFontColor = '#FFFFFF'; // 初始字体颜色
+    this.scoreFontColor = '#FFA500'; // 初始字体颜色
     this.isAnimating = false; // 是否正在播放动画
     this.animationDuration = 500; // 动画持续时间，单位毫秒
     this.lastAnimationTime = 0; // 上次动画开始的时间
@@ -21,6 +21,10 @@ export default class GameInfo {
     const x = 20 // 设置分数显示在屏幕中间
     const y = 800 // 设置分数显示在屏幕上方，留出足够的空间
 
+    // 渲染“本局得分”文字
+    ctx.font = 'bold 20px Fredoka One'; // 设置较小的字体大小
+    ctx.fillText('得分', x, y - 30); // 将文字放在得分上方
+    //渲染得分
     ctx.fillText(score, x, y)
 
     // 更新动画状态

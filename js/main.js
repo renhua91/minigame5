@@ -109,10 +109,10 @@ export default class Main {
 
     this.explosionAnimation = new Animation('', screenWidth, screenHeight);
     this.explosionAnimation.initFrames(explosionImages);
-    this.explosionAnimation.x = screenWidth / 4;
-    this.explosionAnimation.y = screenHeight / 4;
+    this.explosionAnimation.x = screenWidth / 6;
+    this.explosionAnimation.y = screenHeight / 6;
     this.explosionAnimation.width = screenWidth / 1.5;
-    this.explosionAnimation.height = screenHeight / 1.5;
+    this.explosionAnimation.height = screenHeight / 2;
 
     this.explosionAnimation.playAnimation(0, false);
   }
