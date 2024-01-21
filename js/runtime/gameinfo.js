@@ -5,16 +5,47 @@ const atlas = new Image()
 atlas.src = 'images/Common.png'
 
 export default class GameInfo {
+  constructor() {
+    this.scoreFontSize = 40; // 初始字体大小
+    this.scoreFontColor = '#FFFFFF'; // 初始字体颜色
+    this.isAnimating = false; // 是否正在播放动画
+    this.animationDuration = 500; // 动画持续时间，单位毫秒
+    this.lastAnimationTime = 0; // 上次动画开始的时间
+  }
+
   renderGameScore(ctx, score) {
-    ctx.fillStyle = '#ff0000' // 设置字体颜色为红色
-    ctx.font = '60px Arial' // 设置字体大小为原来的三倍
+    ctx.fillStyle = this.scoreFontColor;
+    ctx.font = `${this.scoreFontSize}px Fredoka One`;
 
     const screenWidth = window.innerWidth
-    const x = screenWidth / 2 - 20 // 设置分数显示在屏幕中间
-    const y = 100 // 设置分数显示在屏幕上方，留出足够的空间
+    const x = 20 // 设置分数显示在屏幕中间
+    const y = 800 // 设置分数显示在屏幕上方，留出足够的空间
 
     ctx.fillText(score, x, y)
+
+    // 更新动画状态
+    // this.updateAnimation();
   }
+
+//太复杂，没实现。就是得分后有分数变大和变色的动画。
+// updateAnimation() {
+//     if (this.isAnimating) {
+//       const currentTime = Date.now();
+//       const elapsedTime = currentTime - this.lastAnimationTime;
+
+//       if (elapsedTime < this.animationDuration) {
+//         // 根据经过的时间调整字体大小
+//         const scale = 1 + 0.5 * (1 - elapsedTime / this.animationDuration);
+//         this.scoreFontSize = 40 * scale;
+//         this.scoreFontColor = '#ff0000'; // 字体变大时的颜色
+//       } else {
+//         // 动画结束
+//         this.isAnimating = false;
+//         this.scoreFontSize = 40;
+//         this.scoreFontColor = '#FFFFFF'; // 字体恢复原来大小时的颜色
+//       }
+//     }
+//   }
 
   getRankResult(score) {
     if (score > 10 && score < 20) {

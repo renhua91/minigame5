@@ -199,6 +199,16 @@ export default class Main {
     }
   }
 
+  //没有实现，改用这个方法来实现击败敌人后得分是为了触发得分的加分动画
+  // increaseScore(points) { 
+  //   this.gameInfo = new GameInfo();
+  //   databus.score += points; // 更新得分
+  
+  //   // 触发得分动画
+  //   this.gameInfo.isAnimating = true;
+  //   this.gameInfo.lastAnimationTime = Date.now();
+  // }
+
   // 全局碰撞检测
   collisionDetection() {
     const that = this
@@ -217,6 +227,9 @@ export default class Main {
             enemy.playAnimation();
             that.music.playExplosion();
             databus.score += 1;
+             // 使用 increaseScore 方法增加得分并触发动画
+        // this.increaseScore(1); // 假设每击败一个敌人增加1分
+            
           }
 
           // 隐藏子弹
