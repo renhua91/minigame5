@@ -90,7 +90,6 @@ export default class Main {
     });
 
     console.log("重置状态，", databus.gameOver)
-    // ...其他重置逻辑...
 
     // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
@@ -161,7 +160,7 @@ export default class Main {
   enemyGenerate() {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
-    const bossTime = 30;
+    const bossTime = 5;
 
     if (!this.bossGenerated && elapsedTime > bossTime) {
       const boss = databus.pool.getItemByClass('boss', Boss)
@@ -201,16 +200,6 @@ export default class Main {
       databus.enemys.push(enemy);
     }
   }
-
-  //没有实现，改用这个方法来实现击败敌人后得分是为了触发得分的加分动画
-  // increaseScore(points) { 
-  //   this.gameInfo = new GameInfo();
-  //   databus.score += points; // 更新得分
-
-  //   // 触发得分动画
-  //   this.gameInfo.isAnimating = true;
-  //   this.gameInfo.lastAnimationTime = Date.now();
-  // }
 
   // 全局碰撞检测
   collisionDetection() {
