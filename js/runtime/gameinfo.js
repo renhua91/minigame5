@@ -21,7 +21,7 @@ export default class GameInfo {
     const y = 800 // 设置分数显示在屏幕上方，留出足够的空间
 
     // 渲染“本局得分”文字
-    ctx.font = 'bold 20px Fredoka One'; // 设置较小的字体大小
+    ctx.font = 'bold 40px Fredoka One'; // 设置较小的字体大小
     ctx.fillText('得分', x, y - 30); // 将文字放在得分上方
 
     // 渲染得分
