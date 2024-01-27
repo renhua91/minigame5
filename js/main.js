@@ -27,6 +27,7 @@ export default class Main {
   }
 
   restart() {
+    this.level = 1;
     databus.reset()
     canvas.removeEventListener(
       'touchstart',
@@ -87,7 +88,7 @@ export default class Main {
         boss.hp = boss.hp / 2;
       }
     });
-    
+
     console.log("重置状态，", databus.gameOver)
     // ...其他重置逻辑...
 
@@ -103,7 +104,9 @@ export default class Main {
 
   //爆炸动画方法
   createAndPlayExplosion() {
-    const explosionImages = Array.from({ length: 19 }, (v, i) => `images/explosion${i + 1}.png`);
+    const explosionImages = Array.from({
+      length: 19
+    }, (v, i) => `images/explosion${i + 1}.png`);
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
@@ -124,7 +127,7 @@ export default class Main {
       this.victory = true;
       return;
     }
-    
+
     databus.enterNext()
     this.bg = new BackGround(ctx, level)
     this.player = new Player(ctx)
@@ -203,7 +206,7 @@ export default class Main {
   // increaseScore(points) { 
   //   this.gameInfo = new GameInfo();
   //   databus.score += points; // 更新得分
-  
+
   //   // 触发得分动画
   //   this.gameInfo.isAnimating = true;
   //   this.gameInfo.lastAnimationTime = Date.now();
@@ -227,9 +230,9 @@ export default class Main {
             enemy.playAnimation();
             that.music.playExplosion();
             databus.score += 1;
-             // 使用 increaseScore 方法增加得分并触发动画
-        // this.increaseScore(1); // 假设每击败一个敌人增加1分
-            
+            // 使用 increaseScore 方法增加得分并触发动画
+            // this.increaseScore(1); // 假设每击败一个敌人增加1分
+
           }
 
           // 隐藏子弹
@@ -311,7 +314,7 @@ export default class Main {
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
 
-// 检查是否点击了重新开始按钮
+    // 检查是否点击了重新开始按钮
     const area = this.gameinfo.btnArea
 
     if (x >= area.startX &&
@@ -329,18 +332,9 @@ export default class Main {
       x <= shareArea.endX &&
       y >= shareArea.startY &&
       y <= shareArea.endY) {
-        this.shareToWeChat();
-      return
-    } 
-
-    // 检查是否点击了复活按钮
-    const reviveButtonArea = this.gameinfo.reviveButtonArea;
-    if (x >= reviveButtonArea.startX &&
-      x <= reviveButtonArea.endX &&
-      y >= reviveButtonArea.startY &&
-      y <= reviveButtonArea.endY) {
+      this.shareToWeChat();
       this.revive();
-      return;
+      return
     }
   }
 
