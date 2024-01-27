@@ -8,7 +8,7 @@ const BULLET_HEIGHT = 30
 const __ = {
   speed: Symbol('speed')
 }
-
+ 
 const databus = new DataBus()
 
 export default class BossBullet extends Animation {
