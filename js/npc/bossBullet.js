@@ -1,4 +1,4 @@
-import Sprite from '../base/sprite'
+import Animation from '../base/animation'
 import DataBus from '../databus'
 
 const BULLET_IMG_SRC = 'images/bossbullet1.png'
@@ -11,7 +11,7 @@ const __ = {
 
 const databus = new DataBus()
 
-export default class BossBullet extends Sprite {
+export default class BossBullet extends Animation {
   constructor() {
     super(BULLET_IMG_SRC, BULLET_WIDTH, BULLET_HEIGHT)
   }

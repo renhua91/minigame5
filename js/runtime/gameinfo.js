@@ -23,7 +23,7 @@ export default class GameInfo {
     // 渲染“本局得分”文字
     ctx.font = 'bold 20px Fredoka One'; // 设置较小的字体大小
     ctx.fillText('得分', x, y - 30); // 将文字放在得分上方
-    
+
     // 渲染得分
     ctx.fillText(score, x, y)
 
@@ -75,20 +75,6 @@ export default class GameInfo {
       atlas,
       120, 6, 39, 24,
       screenWidth / 2 - 60,
-      screenHeight / 2 - 100 + 200,
-      120, 40
-    )
-
-    ctx.fillText(
-      '分享复活',
-      screenWidth / 2 - 40,
-      screenHeight / 2 - 100 + 225
-    )
-
-    ctx.drawImage(
-      atlas,
-      120, 6, 39, 24,
-      screenWidth / 2 - 60,
       screenHeight / 2 - 100 + 160,
       120, 40
     )
@@ -99,6 +85,22 @@ export default class GameInfo {
       screenHeight / 2 - 100 + 185
     )
 
+    if(!victory) {
+      ctx.drawImage(
+        atlas,
+        120, 6, 39, 24,
+        screenWidth / 2 - 60,
+        screenHeight / 2 - 100 + 200,
+        120, 40
+      )
+
+      ctx.fillText(
+        '分享复活',
+        screenWidth / 2 - 40,
+        screenHeight / 2 - 100 + 225
+      )
+    }
+    
     /**
      * 重新开始按钮区域
      * 方便简易判断按钮点击
@@ -110,16 +112,17 @@ export default class GameInfo {
       endY: screenHeight / 2 - 100 + 200
     }
 
-    /**
-     * 分享按钮区域
-     * 方便简易判断按钮点击
-     */
-    this.shareBtnArea = {
-      startX: screenWidth / 2 - 60,
-      startY: screenHeight / 2 - 100 + 200,
-      endX: screenWidth / 2 - 60 + 120,
-      endY: screenHeight / 2 - 100 + 240
+    if (!victory) {
+      /**
+       * 分享按钮区域
+       * 方便简易判断按钮点击
+       */
+      this.shareBtnArea = {
+        startX: screenWidth / 2 - 60,
+        startY: screenHeight / 2 - 100 + 200,
+        endX: screenWidth / 2 - 60 + 120,
+        endY: screenHeight / 2 - 100 + 240
+      }
     }
-
   }
 }

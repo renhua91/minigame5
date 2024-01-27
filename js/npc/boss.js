@@ -78,7 +78,7 @@ export default class Boss extends Animation {
       bossBullet.init(
         bulletX,
         this.y + BOSS_HEIGHT,
-        5
+        3
       )
       databus.bossBullets.push(bossBullet)
     }
