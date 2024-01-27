@@ -126,7 +126,7 @@ export default class Player extends Sprite {
   }
   // 增加一个方法来处理buff
   addBulletBuff() {
-    if (this.bulletCount < 3) {
+    if (this.bulletCount < 4) {
       this.bulletCount += 1;
     }
   }
