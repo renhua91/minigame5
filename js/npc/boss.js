@@ -18,11 +18,27 @@ export default class Boss extends Animation {
     this.initExplosionAnimation()
   }
 
+  setBossImage(level) {
+    let bossImageSrc;
+    switch (level) {
+      case 2:
+        bossImageSrc = 'images/boss2.png'; // 第二关的Boss图片
+        break;
+      case 3:
+        bossImageSrc = 'images/boss3.png'; // 第三关的Boss图片
+        break;
+      default:
+        bossImageSrc = 'images/boss1.png'; // 默认的Boss图片
+    }
+  
+    this.img.src = bossImageSrc;
+  }
+
   init() {
     this.x = screenWidth / 2 - this.width / 2
     this.y = -this.height
-    this.hp = 50
-    this.originalhp = 50
+    this.hp = 100
+    this.originalhp = 100
     this.visible = true
     this.bossBullets = []
     this.bulletCount = 2
