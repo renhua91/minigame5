@@ -138,21 +138,21 @@ export default class GameInfo {
     }
 
     // 如果游戏胜利，则不渲染复活按钮
-    if (!victory) {
-      // 添加复活按钮
-      ctx.fillStyle = '#0000FF'; // 设置按钮颜色
-      ctx.fillRect(screenWidth / 2 - 50, screenHeight / 2, 100, 40); // 设置按钮位置和大小
-      ctx.fillStyle = '#FFFFFF'; // 设置文字颜色
-      ctx.fillText('复活', screenWidth / 2 - 25, screenHeight / 2 + 30); // 设置按钮文字
+    // if (!victory) {
+    //   // 添加复活按钮
+    //   ctx.fillStyle = '#0000FF'; // 设置按钮颜色
+    //   ctx.fillRect(screenWidth / 2 - 50, screenHeight / 2, 100, 40); // 设置按钮位置和大小
+    //   ctx.fillStyle = '#FFFFFF'; // 设置文字颜色
+    //   ctx.fillText('复活', screenWidth / 2 - 25, screenHeight / 2 + 30); // 设置按钮文字
 
-      // 设置按钮点击区域
-      this.reviveButtonArea = {
-        startX: screenWidth / 2 - 50,
-        startY: screenHeight / 2,
-        endX: screenWidth / 2 + 50,
-        endY: screenHeight / 2 + 40
-      }
-    }
+    //   // 设置按钮点击区域
+    //   this.reviveButtonArea = {
+    //     startX: screenWidth / 2 - 50,
+    //     startY: screenHeight / 2,
+    //     endX: screenWidth / 2 + 50,
+    //     endY: screenHeight / 2 + 40
+    //   }
+    // }
 
   }
 }
