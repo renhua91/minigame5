@@ -166,7 +166,7 @@ export default class Main {
   enemyGenerate() {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - this.startTime) / 1000; // 游戏经过的时间（秒）
-    const bossTime = 5;
+    const bossTime = 30;
 
     if (!this.bossGenerated && elapsedTime > bossTime) {
       const boss = databus.pool.getItemByClass('boss', Boss)
