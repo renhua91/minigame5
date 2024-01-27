@@ -6,6 +6,7 @@ import Music from './runtime/music'
 import DataBus from './databus'
 import Treasure from './npc/treasure'
 import Boss from './npc/boss'
+import Animation from './base/animation'
 
 const ctx = canvas.getContext('2d')
 const databus = new DataBus()
@@ -53,10 +54,18 @@ export default class Main {
 
   //复活方法
   revive() {
+    this.hasEventBind = false
+    canvas.removeEventListener(
+      'touchstart',
+      this.touchHandler
+    )
     console.log("点击复活")
     // 重置游戏状态
     databus.gameOver = false;
     console.log("设置gameOver为false")
+
+    //创建并播放爆炸动画
+    this.createAndPlayExplosion();
 
     // 将屏幕上的所有敌机血量设置为0
     databus.enemys.forEach(enemy => {
@@ -91,6 +100,23 @@ export default class Main {
       canvas
     )
   }
+
+  //爆炸动画方法
+  createAndPlayExplosion() {
+    const explosionImages = Array.from({ length: 19 }, (v, i) => `images/explosion${i + 1}.png`);
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    this.explosionAnimation = new Animation('', screenWidth, screenHeight);
+    this.explosionAnimation.initFrames(explosionImages);
+    this.explosionAnimation.x = screenWidth / 6;
+    this.explosionAnimation.y = screenHeight / 6;
+    this.explosionAnimation.width = screenWidth / 1.5;
+    this.explosionAnimation.height = screenHeight / 2;
+
+    this.explosionAnimation.playAnimation(0, false);
+  }
+
 
   enterNext(level) {
     if (level > 3) {
@@ -173,6 +199,16 @@ export default class Main {
     }
   }
 
+  //没有实现，改用这个方法来实现击败敌人后得分是为了触发得分的加分动画
+  // increaseScore(points) { 
+  //   this.gameInfo = new GameInfo();
+  //   databus.score += points; // 更新得分
+  
+  //   // 触发得分动画
+  //   this.gameInfo.isAnimating = true;
+  //   this.gameInfo.lastAnimationTime = Date.now();
+  // }
+
   // 全局碰撞检测
   collisionDetection() {
     const that = this
@@ -191,6 +227,9 @@ export default class Main {
             enemy.playAnimation();
             that.music.playExplosion();
             databus.score += 1;
+             // 使用 increaseScore 方法增加得分并触发动画
+        // this.increaseScore(1); // 假设每击败一个敌人增加1分
+            
           }
 
           // 隐藏子弹
@@ -272,6 +311,7 @@ export default class Main {
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
 
+// 检查是否点击了重新开始按钮
     const area = this.gameinfo.btnArea
 
     if (x >= area.startX &&
@@ -282,6 +322,7 @@ export default class Main {
       return
     }
 
+    // 检查是否点击了分享按钮
     const shareArea = this.gameinfo.shareBtnArea
 
     if (x >= shareArea.startX &&
@@ -302,6 +343,7 @@ export default class Main {
       return;
     }
   }
+
 
   /**
    * canvas重绘函数---
@@ -340,6 +382,9 @@ export default class Main {
         this.touchHandler = this.touchEventHandler.bind(this)
         canvas.addEventListener('touchstart', this.touchHandler)
       }
+    }
+    if (this.explosionAnimation && this.explosionAnimation.isPlaying) {
+      this.explosionAnimation.aniRender(ctx);
     }
   }
 
