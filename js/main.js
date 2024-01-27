@@ -23,12 +23,16 @@ export default class Main {
     this.bossGenerated = false;
     this.level = 1;
     this.victory = false;
+    this.accelerateBuffCount = 0; // 加速buff数量
+    this.bulletBuffCount = 0;     // 子弹buff数量
     this.restart()
   }
 
   restart() {
     this.level = 1;
     databus.reset()
+    this.accelerateBuffCount = 0; // 加速buff数量
+    this.bulletBuffCount = 0;     // 子弹buff数量
     canvas.removeEventListener(
       'touchstart',
       this.touchHandler
@@ -128,6 +132,8 @@ export default class Main {
     }
 
     databus.enterNext()
+    this.accelerateBuffCount = 0; // 加速buff数量
+    this.bulletBuffCount = 0;     // 子弹buff数量
     this.bg = new BackGround(ctx, level)
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
@@ -426,15 +432,23 @@ export default class Main {
 
     if (databus.frame % 300 === 0) { // 假设每300帧生成一个宝藏
       let treasure;
-      if (Math.random() < 0.5) {
+       if (Math.random() < 0.5) {
         // 50% 的概率生成宝藏1
-        treasure = new Treasure(1);
+        if (this.bulletBuffCount < 3) {
+          treasure = new Treasure(1);
+          this.bulletBuffCount++; // 增加子弹buff数量
+        }
       } else {
         // 50% 的概率生成宝藏2
-        treasure = new Treasure(2);
+        if (this.accelerateBuffCount < 3) {
+          treasure = new Treasure(2);
+          this.accelerateBuffCount++; // 增加加速buff数量
+        }
       }
-      treasure.init();
-      databus.treasures.push(treasure);
+      if (treasure) { // 检查treasure是否为undefined
+        treasure.init();
+        databus.treasures.push(treasure);
+      }
     }
   }
 
