@@ -28,6 +28,7 @@ export default class Main {
     this.restart()
   }
 
+  
   restart() {
     this.level = 1;
     databus.reset()
@@ -170,6 +171,7 @@ export default class Main {
 
     if (!this.bossGenerated && elapsedTime > bossTime) {
       const boss = databus.pool.getItemByClass('boss', Boss)
+      boss.setBossImage(this.level); // 根据当前关卡设置Boss图片
       boss.init();
       databus.boss.push(boss);
       this.bossGenerated = true;
@@ -421,6 +423,7 @@ export default class Main {
       this.bindLoop,
       canvas
     )
+
   }
 
   // 在适当的位置生成宝箱
