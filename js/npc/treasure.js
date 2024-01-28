@@ -53,8 +53,6 @@ export default class Treasure extends Animation {
   drawToCanvas(ctx) {
     if (!this.visible) return
 
-    // console.log('Drawing treasure at', this.x, this.y); // 调试信息
-
     ctx.drawImage(
       this.img,
       this.x,

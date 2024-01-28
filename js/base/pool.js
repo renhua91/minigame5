@@ -50,7 +50,6 @@ export default class Pool {
   clear() {
     for (const key in this[__.poolDic]) {
       if (this[__.poolDic].hasOwnProperty(key)) {
-        console.log("clear pool : " + key)
         this[__.poolDic][key] = []
       }
     }

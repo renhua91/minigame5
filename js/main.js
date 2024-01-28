@@ -64,10 +64,8 @@ export default class Main {
       'touchstart',
       this.touchHandler
     )
-    console.log("点击复活")
     // 重置游戏状态
     databus.gameOver = false;
-    console.log("设置gameOver为false")
 
     //创建并播放爆炸动画
     this.createAndPlayExplosion();
@@ -92,8 +90,6 @@ export default class Main {
         boss.hp = boss.hp / 2;
       }
     });
-
-    console.log("重置状态，", databus.gameOver)
 
     // 清除上一局的动画
     window.cancelAnimationFrame(this.aniId)
@@ -153,7 +149,6 @@ export default class Main {
   }
 
   shareToWeChat() {
-    console.log("用户点击分享")
     wx.shareAppMessage({
       title: '是兄弟就来大战肥高',
     })
@@ -181,12 +176,13 @@ export default class Main {
     }
 
     if (databus.frame % 30 === 0) {
-      let enemyType = 1; // 默认为血量1
-      // console.log("出现type1",currentTime);
+      // 默认为血量1
+      let enemyType = 1; 
       // 根据经过的时间设置敌人的血量类型
       if (elapsedTime > 10) {
         if (Math.random() < 0.5) {
-          enemyType = 2; // 20%的概率生成血量2的敌人
+          // 20%的概率生成血量2的敌人
+          enemyType = 2; 
         }
       }
 
@@ -289,19 +285,18 @@ export default class Main {
 
       if (this.player.isCollideWith(treasure)) {
         // 检查是否是宝藏2
-        console.log("treasure.getType() : ", treasure.getType())
         if (treasure.getType() === 2) {
           this.player.increaseBulletSpeed();
         } else {
-          this.player.addBulletBuff(); // 宝藏1的现有逻辑
+          // 宝藏1的现有逻辑
+          this.player.addBulletBuff(); 
         }
         databus.removeTreasure(treasure)
-        // 移除宝箱或做其他处理...
       }
     }
 
   }
-
+ 
   // 游戏结束后的触摸事件处理逻辑
   touchEventHandler(e) {
     e.preventDefault()
