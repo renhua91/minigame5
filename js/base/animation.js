@@ -59,13 +59,20 @@ export default class Animation extends Sprite {
 
   // 将播放中的帧绘制到canvas上
   aniRender(ctx) {
-    ctx.drawImage(
-      this.imgList[this.index],
-      this.x,
-      this.y,
-      this.width * 1.2,
-      this.height * 1.2
-    )
+    if (this.index < 0 || this.index >= this.count) {
+      return; // 确保索引在有效范围内
+    }
+
+    const img = this.imgList[this.index];
+    if (img.complete) { // 确保图像已加载
+      ctx.drawImage(
+        img,
+        this.x,
+        this.y,
+        this.width * 1.2,
+        this.height * 1.2
+      );
+    }
   }
 
   // 播放预定的帧动画
