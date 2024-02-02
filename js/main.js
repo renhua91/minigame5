@@ -151,7 +151,7 @@ export default class Main {
 
   shareToWeChat() {
     wx.shareAppMessage({
-      title: '是兄弟就来玩苍穹之战',
+      title: '是兄弟就来玩天空守卫者',
     })
   }
 
