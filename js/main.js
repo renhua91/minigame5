@@ -17,18 +17,30 @@ const databus = new DataBus()
 export default class Main {
   constructor() {
     this.gameStarted = false;
+    this.gameinfo = new GameInfo();
+
+    // 加载开始按钮图像
+    this.startButtonImg = new Image();
+    this.startButtonImg.src = 'images/startbutton.png';
+    // 确保这是正确的路径
+    this.startButtonImg.onload = () => {
+      // 可选：在图像加载完成后再显示开始页面
+      this.render();
+    };
+
     // 绑定触摸事件监听器
     this.bindTouchEvents();
   }
 
   // 绑定触摸事件监听器
   bindTouchEvents() {
-    canvas.addEventListener('touchstart', this.touchEventHandler.bind(this));
+    console.log("进入bindTouchEvents, 第一次addEvent")
+    canvas.addEventListener('touchstart', this.startButtonTouchEventHandler.bind(this));
   }
 
-  // 开始游戏的方法
+  // 开始游戏的方法 
   startGame() {
-    this.gameStarted = ture;
+    this.gameStarted = true;
     // 维护当前requestAnimationFrame的id
     this.aniId = 0;
     // 初始化 startTime
@@ -311,10 +323,9 @@ export default class Main {
 
   }
 
-  // 游戏结束后的触摸事件处理逻辑
-  touchEventHandler(e) {
+  startButtonTouchEventHandler(e) {
+    console.log("进入startButtonTouchEventHandler")
     e.preventDefault()
-
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
 
@@ -325,14 +336,23 @@ export default class Main {
       x <= startButtonArea.endX &&
       y >= startButtonArea.startY &&
       y <= startButtonArea.endY) {
+      canvas.removeEventListener('touchstart', this.startButtonTouchEventHandler);
+      console.log("第一次remove Event")
       this.startGame();
       return;
     }
+  }
 
+  // 游戏结束后的触摸事件处理逻辑
+  touchEventHandler(e) {
+    e.preventDefault()
+    console.log("进入touchEventHandler")
+
+    const x = e.touches[0].clientX
+    const y = e.touches[0].clientY
 
     // 检查是否点击了重新开始按钮
     const area = this.gameinfo.btnArea
-
     if (x >= area.startX &&
       x <= area.endX &&
       y >= area.startY &&
@@ -343,7 +363,6 @@ export default class Main {
 
     // 检查是否点击了分享按钮
     const shareArea = this.gameinfo.shareBtnArea
-
     if (x >= shareArea.startX &&
       x <= shareArea.endX &&
       y >= shareArea.startY &&
@@ -363,7 +382,7 @@ export default class Main {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     if (!this.gameStarted) {
-      this.gameinfo.renderStartButton(ctx);
+      this.gameinfo.renderStartButton(ctx, this.startButtonImg);
       return;
     }
 

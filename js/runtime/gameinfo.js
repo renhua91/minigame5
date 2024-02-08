@@ -32,18 +32,14 @@ export default class GameInfo {
   }
 
   // 在 gameinfo.js 中添加
-  renderStartButton(ctx) {
+  renderStartButton(ctx, startButtonImg) {
+    console.log("进入renderStartButton")
     const buttonWidth = 200;
     const buttonHeight = 100;
     const buttonX = (screenWidth - buttonWidth) / 2;
     const buttonY = (screenHeight - buttonHeight) / 2;
 
-    // 假设按钮图像已经加载到了某个变量，例如 this.startButtonImg
-    // 加载开始按钮图像
-    this.startButtonImg = new Image();
-    // 按钮图像路径
-    this.startButtonImg.src = 'images/startbutton.png'; 
-    ctx.drawImage(this.startButtonImg, buttonX, buttonY, buttonWidth, buttonHeight);
+    ctx.drawImage(startButtonImg, buttonX, buttonY, buttonWidth, buttonHeight);
 
     // 保存按钮区域，用于后续的点击事件检测
     this.startButtonArea = {
