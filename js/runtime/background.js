@@ -4,7 +4,7 @@ const screenWidth = window.innerWidth
 const screenHeight = window.innerHeight
 
 const BG_IMG_SRC_PREFIX = 'images/bg'
-const BG_WIDTH = 512
+const BG_WIDTH = 256
 const BG_HEIGHT = 512
 
 /**

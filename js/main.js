@@ -16,24 +16,36 @@ const databus = new DataBus()
  */
 export default class Main {
   constructor() {
+    this.gameStarted = false;
+    // 绑定触摸事件监听器
+    this.bindTouchEvents();
+  }
+
+  // 绑定触摸事件监听器
+  bindTouchEvents() {
+    canvas.addEventListener('touchstart', this.touchEventHandler.bind(this));
+  }
+
+  // 开始游戏的方法
+  startGame() {
+    this.gameStarted = ture;
     // 维护当前requestAnimationFrame的id
-    this.aniId = 0
+    this.aniId = 0;
     // 初始化 startTime
     this.startTime = Date.now();
     this.bossGenerated = false;
     this.level = 1;
     this.victory = false;
     this.accelerateBuffCount = 0; // 加速buff数量
-    this.bulletBuffCount = 0;     // 子弹buff数量
-    this.restart()
+    this.bulletBuffCount = 0; // 子弹buff数量
+    this.restart();
   }
 
-  
   restart() {
     this.level = 1;
     databus.reset()
     this.accelerateBuffCount = 0; // 加速buff数量
-    this.bulletBuffCount = 0;     // 子弹buff数量
+    this.bulletBuffCount = 0; // 子弹buff数量
     canvas.removeEventListener(
       'touchstart',
       this.touchHandler
@@ -130,7 +142,7 @@ export default class Main {
 
     databus.enterNext()
     this.accelerateBuffCount = 0; // 加速buff数量
-    this.bulletBuffCount = 0;     // 子弹buff数量
+    this.bulletBuffCount = 0; // 子弹buff数量
     this.bg = new BackGround(ctx, level)
     this.player = new Player(ctx)
     this.gameinfo = new GameInfo()
@@ -179,12 +191,12 @@ export default class Main {
 
     if (databus.frame % 30 === 0) {
       // 默认为血量1
-      let enemyType = 1; 
+      let enemyType = 1;
       // 根据经过的时间设置敌人的血量类型
       if (elapsedTime > 10) {
         if (Math.random() < 0.5) {
           // 20%的概率生成血量2的敌人
-          enemyType = 2; 
+          enemyType = 2;
         }
       }
 
@@ -291,20 +303,32 @@ export default class Main {
           this.player.increaseBulletSpeed();
         } else {
           // 宝藏1的现有逻辑
-          this.player.addBulletBuff(); 
+          this.player.addBulletBuff();
         }
         databus.removeTreasure(treasure)
       }
     }
 
   }
- 
+
   // 游戏结束后的触摸事件处理逻辑
   touchEventHandler(e) {
     e.preventDefault()
 
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
+
+    // 检查是否点击了开始按钮
+    const startButtonArea = this.gameinfo.startButtonArea;
+    if (startButtonArea &&
+      x >= startButtonArea.startX &&
+      x <= startButtonArea.endX &&
+      y >= startButtonArea.startY &&
+      y <= startButtonArea.endY) {
+      this.startGame();
+      return;
+    }
+
 
     // 检查是否点击了重新开始按钮
     const area = this.gameinfo.btnArea
@@ -337,6 +361,11 @@ export default class Main {
    */
   render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    if (!this.gameStarted) {
+      this.gameinfo.renderStartButton(ctx);
+      return;
+    }
 
     this.bg.render(ctx)
 
@@ -430,7 +459,7 @@ export default class Main {
 
     if (databus.frame % 300 === 0) { // 假设每300帧生成一个宝藏
       let treasure;
-       if (Math.random() < 0.5) {
+      if (Math.random() < 0.5) {
         // 50% 的概率生成宝藏1
         if (this.bulletBuffCount < 3) {
           treasure = new Treasure(1);

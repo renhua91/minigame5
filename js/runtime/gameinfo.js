@@ -31,6 +31,29 @@ export default class GameInfo {
     // this.updateAnimation();
   }
 
+  // 在 gameinfo.js 中添加
+  renderStartButton(ctx) {
+    const buttonWidth = 200;
+    const buttonHeight = 100;
+    const buttonX = (screenWidth - buttonWidth) / 2;
+    const buttonY = (screenHeight - buttonHeight) / 2;
+
+    // 假设按钮图像已经加载到了某个变量，例如 this.startButtonImg
+    // 加载开始按钮图像
+    this.startButtonImg = new Image();
+    // 按钮图像路径
+    this.startButtonImg.src = 'images/startbutton.png'; 
+    ctx.drawImage(this.startButtonImg, buttonX, buttonY, buttonWidth, buttonHeight);
+
+    // 保存按钮区域，用于后续的点击事件检测
+    this.startButtonArea = {
+      startX: buttonX,
+      startY: buttonY,
+      endX: buttonX + buttonWidth,
+      endY: buttonY + buttonHeight
+    };
+  }
+
   getRankResult(score) {
     if (score <= 10) {
       return "兄dei，你太菜了！！！"
@@ -85,7 +108,7 @@ export default class GameInfo {
       screenHeight / 2 - 100 + 185
     )
 
-    if(!victory) {
+    if (!victory) {
       ctx.drawImage(
         atlas,
         120, 6, 39, 24,
@@ -100,7 +123,7 @@ export default class GameInfo {
         screenHeight / 2 - 100 + 225
       )
     }
-    
+
     /**
      * 重新开始按钮区域
      * 方便简易判断按钮点击
