@@ -20,6 +20,10 @@ export default class Main {
     this.gameinfo = new GameInfo();
 
     // 加载开始按钮图像
+    this.startBg = new Image();
+    this.startBg.src = 'images/hero1.png';
+
+    // 加载开始按钮图像
     this.startButtonImg = new Image();
     this.startButtonImg.src = 'images/startbutton.png';
     // 确保这是正确的路径
@@ -379,6 +383,9 @@ export default class Main {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     if (!this.gameStarted) {
+      this.bg = new BackGround(ctx, 1);
+      this.bg.render(ctx);
+      this.gameinfo.renderStartBg(ctx, this.startBg);
       this.gameinfo.renderStartButton(ctx, this.startButtonImg);
       return;
     }

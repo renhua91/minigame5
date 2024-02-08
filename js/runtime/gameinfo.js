@@ -32,12 +32,25 @@ export default class GameInfo {
   }
 
   // 在 gameinfo.js 中添加
+  renderStartBg(ctx, startButtonImg) {
+    const buttonWidth = 300;
+    const buttonHeight = 200;
+    const buttonX = (screenWidth - buttonWidth) / 2;
+    const buttonY = (screenHeight - buttonHeight) / 2;
+
+    // 加载开始按钮图像
+    // this.startBgImg = new Image();
+    // this.startBgImg.src = 'images/startBg.jpg';
+    ctx.drawImage(startButtonImg, buttonX, buttonY, buttonWidth, buttonHeight);
+  }
+
+  // 在 gameinfo.js 中添加
   renderStartButton(ctx, startButtonImg) {
     console.log("进入renderStartButton")
     const buttonWidth = 200;
     const buttonHeight = 100;
     const buttonX = (screenWidth - buttonWidth) / 2;
-    const buttonY = (screenHeight - buttonHeight) / 2;
+    const buttonY = (screenHeight - buttonHeight) / 2 + 200;
 
     ctx.drawImage(startButtonImg, buttonX, buttonY, buttonWidth, buttonHeight);
 
