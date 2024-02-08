@@ -34,8 +34,8 @@ export default class Main {
 
   // 绑定触摸事件监听器
   bindTouchEvents() {
-    console.log("进入bindTouchEvents, 第一次addEvent")
-    canvas.addEventListener('touchstart', this.startButtonTouchEventHandler.bind(this));
+    this.boundStartButtonTouchEventHandler = this.startButtonTouchEventHandler.bind(this);
+    canvas.addEventListener('touchstart', this.boundStartButtonTouchEventHandler);
   }
 
   // 开始游戏的方法 
@@ -324,7 +324,6 @@ export default class Main {
   }
 
   startButtonTouchEventHandler(e) {
-    console.log("进入startButtonTouchEventHandler")
     e.preventDefault()
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
@@ -336,8 +335,7 @@ export default class Main {
       x <= startButtonArea.endX &&
       y >= startButtonArea.startY &&
       y <= startButtonArea.endY) {
-      canvas.removeEventListener('touchstart', this.startButtonTouchEventHandler);
-      console.log("第一次remove Event")
+      canvas.removeEventListener('touchstart', this.boundStartButtonTouchEventHandler);
       this.startGame();
       return;
     }
@@ -346,7 +344,6 @@ export default class Main {
   // 游戏结束后的触摸事件处理逻辑
   touchEventHandler(e) {
     e.preventDefault()
-    console.log("进入touchEventHandler")
 
     const x = e.touches[0].clientX
     const y = e.touches[0].clientY
